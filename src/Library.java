@@ -158,7 +158,13 @@ public class Library {
         }
 
         for(int i = 0; i < bookCount; i++) {
-            newBookEntry = scan.nextLine();
+            try {
+                newBookEntry = scan.nextLine().trim();
+            } catch(NoSuchElementException e) {
+                System.out.println("ERROR: Could not parse book entry.");
+                return Code.BOOK_COUNT_ERROR;
+            }
+
             System.out.println("-> Parsing book: " + newBookEntry);
             List<String> bookFields = Arrays.asList(newBookEntry.split(","));
 
@@ -215,7 +221,13 @@ public class Library {
         }
 
         for(int i = 0; i < shelfCount; i++) {
-            newShelfEntry = scan.nextLine();
+            try {
+                newShelfEntry = scan.nextLine().trim();
+            } catch(NoSuchElementException e) {
+                System.out.println("ERROR: Could not parse shelf entry.");
+                return Code.SHELF_COUNT_ERROR;
+            }
+
             System.out.println("-> Parsing shelf: " + newShelfEntry);
             List<String> shelfFields = Arrays.asList(newShelfEntry.split(","));
 
@@ -288,7 +300,13 @@ public class Library {
         }
 
         for(int i = 0; i < readerCount; i++) {
-            newReaderEntry = scan.nextLine();
+            try {
+                newReaderEntry = scan.nextLine().trim();
+            } catch(NoSuchElementException e) {
+                System.out.println("ERROR: Could not parse reader entry.");
+                return Code.READER_COUNT_ERROR;
+            }
+
 //            System.out.println("-> Parsing reader: " + newReaderEntry);
             List<String> readerFields = Arrays.asList(newReaderEntry.split(","));
 
@@ -409,8 +427,11 @@ public class Library {
         // removes book from reader's list
         System.out.println(reader.getName() + " is returning " + book);
         returnedCode = reader.removeBook(book);
+
+        // An Unlikely scenario. But meh.
         if(!returnedCode.equals(Code.SUCCESS)) {
             System.out.println("Could not return " + book);
+            return returnedCode;
         }
 
         // puts book back on shelf (assuming correct shelf subject exists)

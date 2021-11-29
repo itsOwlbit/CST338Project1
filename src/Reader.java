@@ -57,7 +57,7 @@ public class Reader {
             this.books.remove(book);
             return Code.SUCCESS;
         } else {
-            return Code.READER_COULD_NOT_REMOVE_BOOK_ERROR;
+            return Code.READER_DOESNT_HAVE_BOOK_ERROR;
         }
     }
 
